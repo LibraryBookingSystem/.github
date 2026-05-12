@@ -1,2 +1,5 @@
 # .github
-Microservice library seat and room booking: Java Spring Boot services, JWT/RBAC, RabbitMQ events, Flutter client, Docker Compose local stack.
+
+Organization defaults and the [Library Booking System](https://github.com/LibraryBookingSystem) profile README.
+
+The public org overview is rendered from [`profile/README.md`](./profile/README.md). Project documentation lives in the [Documentation](https://github.com/LibraryBookingSystem/Documentation) repository.
