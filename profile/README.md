@@ -12,14 +12,34 @@ Microservice platform for reserving library seats and rooms. A Flutter client ta
 ## Architecture
 
 ```mermaid
-flowchart LR
-  Client[frontend-web] --> GW[api-gateway]
-  GW --> Services[Spring Boot microservices]
-  Services --> DB[(PostgreSQL)]
-  Services --> RMQ[(RabbitMQ)]
-  RMQ --> RT[realtime-gateway]
-  RT --> Client
+flowchart TB
+  Client[frontend-web] --> GW[api-gateway :8080]
+  GW --> AUTH[auth-service :3002]
+  GW --> USER[user-service :3001]
+  GW --> CAT[catalog-service :3003]
+  GW --> BOOK[booking-service :3004]
+  GW --> POL[policy-service :3005]
+  GW --> NOTIF[notification-service :3006]
+  GW --> ANA[analytics-service :3007]
+  GW --> RT[realtime-gateway :3008]
+
+  USER --> USER_DB[(user_db)]
+  CAT --> CAT_DB[(catalog_db)]
+  BOOK --> BOOK_DB[(booking_db)]
+  POL --> POL_DB[(policy_db)]
+  NOTIF --> NOTIF_DB[(notification_db)]
+  ANA --> ANA_DB[(analytics_db)]
+
+  USER --> REDIS[(Redis)]
+  BOOK --> RMQ[(RabbitMQ)]
+  CAT --> RMQ
+  POL --> RMQ
+  NOTIF --> RMQ
+  ANA --> RMQ
+  RT --> RMQ
 ```
+
+Each persistence-backed microservice owns one PostgreSQL database on the shared Postgres instance. `auth-service`, `api-gateway`, and `realtime-gateway` do not have their own databases.
 
 ## Start here
 
